@@ -5,6 +5,22 @@ class ColorApiService {
 
   public BLACK = '#000000';
 
+  public PRIMARY = '#2231AA';
+
+  public PRIMARY_2 = '#5360CD';
+
+  public SECONDARY = '#313037';
+
+  public GRAY = '#8D8E97';
+
+  public MEDIUM = '#DADADA';
+
+  public EXTRA_LIGHT = '#F3F3F3';
+
+  public ERROR = '#FD3419';
+
+  public LIGHT = '#E8E8E8';
+
   public getHexOpacity(value: number) {
     try {
       if (value > 1) value /= 100;
