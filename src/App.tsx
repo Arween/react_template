@@ -1,4 +1,4 @@
-// import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 // import styled from 'styled-components';
@@ -6,7 +6,7 @@ import './App.css';
 // import { Button } from './components/atoms/Button';
 // import { ReactComponent as FavoriteIcon } from './assets/icons/favoritesIcon.svg';
 // import { ColorService } from './services/ColorService';
-// import { Input } from './components/atoms/Input';
+import { Input } from './components/atoms/Input';
 // import { Tabs } from './components/atoms/Tabs';
 // import { Footer } from './components/atoms/Footer/Footer';
 // import { Container } from './components/layouts/Container/Container';
@@ -28,19 +28,22 @@ function App() {
   //   { title: 'Popular', url: '/popular' },
   // ];
 
-  // const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   console.log({ event });
-  // };
+  const onChange = (event: ChangeEvent<HTMLInputElement>, field: string) => {
+    console.log({ event, field });
+    setName(event.target.value);
+  };
 
-  // const inputValues = {
-  //   value: 'Text',
-  //   type: 'text' as 'text',
-  //   error: '',
-  //   labelText: 'User name',
-  //   placeholder: 'Placeholder',
-  //   disabled: false,
-  //   // onChange,
-  // };
+  const [name, setName] = useState('');
+
+  const inputValues = {
+    value: name,
+    type: 'text' as 'text',
+    error: '',
+    labelText: 'User name',
+    placeholder: 'Placeholder',
+    disabled: false,
+    // onChange,
+  };
 
   return (
     <div className="App">
@@ -56,8 +59,12 @@ function App() {
           rel="noopener noreferrer">
           Learn React
         </a> */}
+
       <FormTemplate title="Sign in">
-        <p>Hello</p>
+        {/* <p>Hello</p> */}
+        <Input onChange={(event) => onChange(event, 'username')} {...inputValues} />
+        <Input onChange={(event) => onChange(event, 'username')} {...inputValues} />
+        <Input onChange={(event) => onChange(event, 'username')} {...inputValues} />
         {/* <Container>
           <Footer />
         </Container> */}
@@ -69,7 +76,7 @@ function App() {
       {/* <Tabs list={tabs} activeTabUrl={'/my'} />
         <Input onChange={(event) => onChange(event)} {...inputValues} error={'Text error'} />
         <Input onChange={(event) => onChange(event)} {...inputValues} disabled />
-        <Input onChange={(event) => onChange(event)} {...inputValues} value={''} />
+ 
         <Input
           onChange={(event) => onChange(event)}
           {...inputValues}
