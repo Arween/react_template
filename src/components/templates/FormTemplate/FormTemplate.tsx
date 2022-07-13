@@ -22,29 +22,34 @@ export const FormTemplate = ({ children, title }: IFormTemplate) => (
           <Link href="/">Back to home</Link>
           <Title title={title} />
         </Head>
-        {children}
+        <FormContent>{children}</FormContent>
       </Content>
-
       <Footer />
     </Container>
   </Wrapper>
 );
 
 const Wrapper = styled.div`
-  background: ${ColorService.MEDIUM};
+  background: ${ColorService.EXTRA_LIGHT};
   width: 100%;
   display: flex;
   padding: 34px;
   flex-direction: column;
-  min-height: 100vh;
   padding: 0;
-  /* justify-content: space-between; */
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  min-height: calc(100vh - 160px);
+`;
+
+const FormContent = styled.div`
+  border: 1px solid #dadada;
+  padding: 40px;
+`;
 
 const Head = styled.div`
   text-align: left;
+  padding: 72px 0;
 `;
 
 // const Title = styled.p`

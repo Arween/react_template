@@ -11,6 +11,7 @@ interface IInput {
   placeholder: string;
   disabled: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur: () => void;
 }
 
 export const Input = ({
@@ -21,6 +22,7 @@ export const Input = ({
   placeholder,
   disabled,
   onChange,
+  onBlur,
 }: IInput) => (
   <LabelStyled>
     {labelText}
@@ -30,7 +32,8 @@ export const Input = ({
       placeholder={placeholder}
       disabled={disabled}
       onChange={onChange}
-      hasError={Boolean(error.length)}
+      hasError={Boolean(error?.length)}
+      onBlur={onBlur}
     />
     {error && <TextError>{error}</TextError>}
   </LabelStyled>

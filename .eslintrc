@@ -68,7 +68,7 @@
     "class-methods-use-this": 0,
     "no-underscore-dangle": 0,
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
+    // "@typescript-eslint/no-unused-vars": ["error"],
     "no-unused-expressions": 0,
     "babel/no-unused-expressions": 2,
     "react/jsx-props-no-spreading": 0,

@@ -10,7 +10,7 @@ export const Footer = () => (
 );
 
 const FooterStyled = styled.footer`
-  background: ${ColorService.MEDIUM};
+  background: ${ColorService.EXTRA_LIGHT};
   width: 100%;
   display: flex;
   padding: 34px;
