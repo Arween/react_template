@@ -1,4 +1,5 @@
 import { ReactNode, ChangeEvent, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 import {
@@ -12,6 +13,7 @@ import { Input } from '../../atoms/Input';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
 
 export const RegistrationPage = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     username: {
       value: '',
@@ -37,23 +39,13 @@ export const RegistrationPage = () => {
 
   const [sendedUser, setSendedUser] = useState(false);
 
-  const [posts, setPosts] = useState();
-
   const { username, email, password, confirmPassword } = user;
 
   useEffect(() => {
     if (sendedUser) {
-      console.log('useEffect');
-      fetch('https://studapi.teachmeskills.by/blog/posts/?limi3t=20')
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          setPosts(data.results);
-        });
+      navigate('/posts');
     }
-  }, [sendedUser]);
+  }, [navigate, sendedUser]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>, field: string) => {
     setUser({
@@ -131,59 +123,52 @@ export const RegistrationPage = () => {
   //     return value.length && !error.length;
   //   }, true);
 
-  console.log({ posts });
   return (
-    <FormTemplate title="Sign in">
-      {!sendedUser ? (
-        <>
-          <InputWrapper>
-            <Input
-              onBlur={() => onBlur('username')}
-              onChange={(event) => onChange(event, 'username')}
-              {...inputValues}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              onBlur={() => onBlur('email')}
-              onChange={(event) => onChange(event, 'email')}
-              {...inputValues}
-              labelText="Email"
-              value={email.value}
-              error={email.error}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              onBlur={() => onBlur('password')}
-              onChange={(event) => onChange(event, 'password')}
-              {...inputValues}
-              labelText="Password"
-              type="password"
-              value={password.value}
-              error={password.error}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              onBlur={() => onBlur('confirmPassword')}
-              onChange={(event) => onChange(event, 'confirmPassword')}
-              {...inputValues}
-              labelText="Confirm password"
-              type="password"
-              value={confirmPassword.value}
-              error={confirmPassword.error}
-            />
-          </InputWrapper>
-          <Button text="Sign Up" theme="primary" onClick={() => sendUser()} />
-        </>
-      ) : (
-        <>
-          Posts
-          <List></List>
-        </>
-      )}
-    </FormTemplate>
+    <>
+      {/* <FormTemplate title="Sign in"> */}
+      <InputWrapper>
+        <Input
+          onBlur={() => onBlur('username')}
+          onChange={(event) => onChange(event, 'username')}
+          {...inputValues}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <Input
+          onBlur={() => onBlur('email')}
+          onChange={(event) => onChange(event, 'email')}
+          {...inputValues}
+          labelText="Email"
+          value={email.value}
+          error={email.error}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <Input
+          onBlur={() => onBlur('password')}
+          onChange={(event) => onChange(event, 'password')}
+          {...inputValues}
+          labelText="Password"
+          type="password"
+          value={password.value}
+          error={password.error}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <Input
+          onBlur={() => onBlur('confirmPassword')}
+          onChange={(event) => onChange(event, 'confirmPassword')}
+          {...inputValues}
+          labelText="Confirm password"
+          type="password"
+          value={confirmPassword.value}
+          error={confirmPassword.error}
+        />
+      </InputWrapper>
+      <Button text="Sign Up" theme="primary" onClick={() => sendUser()} />
+
+      {/* </FormTemplate> */}
+    </>
   );
 };
 

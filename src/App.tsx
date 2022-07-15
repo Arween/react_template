@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
 // import styled from 'styled-components';
@@ -9,6 +10,9 @@ import './App.css';
 import { Input } from './components/atoms/Input';
 import { RegistrationPage } from './components/pages/Registration';
 import { FormTemplate } from './components/templates/FormTemplate/FormTemplate';
+import { PostsPage } from './components/pages/Posts/Posts';
+import { Header } from './components/molecules/Header/Header';
+import { PostPage } from './components/pages/Post/Post';
 
 function App() {
   const onChange = async (event: ChangeEvent<HTMLInputElement>, field: string) => {
@@ -20,7 +24,52 @@ function App() {
 
   return (
     <div className="App">
-      <RegistrationPage />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="posts"
+            element={
+              // <div></div>
+              <FormTemplate title="text">
+                <PostsPage />
+              </FormTemplate>
+            }>
+            {/* <Route
+              path=":postID"
+              element={
+                // <div></div>
+                <FormTemplate title="text">
+                  <PostPage />
+                </FormTemplate>
+              }></Route> */}
+          </Route>
+          <Route
+            path="/posts/:postID"
+            element={
+              // <div></div>
+              <FormTemplate title="text">
+                <PostPage />
+              </FormTemplate>
+            }></Route>
+          <Route
+            path="/"
+            element={
+              <FormTemplate title="text">
+                <RegistrationPage />
+              </FormTemplate>
+            }>
+            {/* <Route
+              path="/posts"
+              element={
+                // <div></div>
+                <FormTemplate title="text">
+                  <PostsPage />
+                </FormTemplate>
+              }
+            /> */}
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
