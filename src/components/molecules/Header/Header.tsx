@@ -14,8 +14,11 @@ export const Header = () => {
           Home
         </LinkStyled>{' '}
         |{' '}
-        <LinkStyled active={Boolean(location.pathname === '/posts')} to="posts">
+        <LinkStyled active={Boolean(location.pathname === '/posts')} to="/posts">
           Posts
+        </LinkStyled>
+        <LinkStyled active={Boolean(location.pathname === '/favorites')} to="/favorites">
+          Favorites
         </LinkStyled>
       </NavStyled>
       {/* <Image src="http://wallpapers-image.ru/2560x1600/mountains/wallpapers/wallpapers-mountains-08.jpg" /> */}

@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { RegistrationPage } from './components/pages/Registration';
-import { FormTemplate } from './components/templates/FormTemplate/FormTemplate';
-import { PostsPage } from './components/pages/Posts/Posts';
+import { store } from './core/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    {/* <BrowserRouter>
+    <Provider store={store}>
+      {/* <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
           <Route
@@ -34,7 +35,8 @@ root.render(
         </Route>
       </Routes>
     </BrowserRouter> */}
-    <App />
+      <App />
+    </Provider>
   </React.StrictMode>,
 );
 
