@@ -29,45 +29,17 @@ import { Input } from '../../atoms/Input';
 //   results: IPost[];
 // }
 
-export const PostsPage = () => {
+export const FavoritesPage = () => {
   // const [sendedUser, setSendedUser] = useState(false);
 
   const postsStore = useSelector(showPosts);
-  console.log({ postsStore });
+  console.log('FavoritesPage', { postsStore });
   const dispatch = useDispatch();
 
   const [posts, setPosts] = useState<IPostsInfo>();
   const [postsV2, setPostsV2] = useState<IPostsInfo>();
   const [searchValue, setSearchValue] = useState<string>('');
   const [orderingValue, setOrderingValue] = useState<string>('');
-
-  useEffect(() => {
-    dispatch(getPostsAsync() as any);
-    // fetch(
-    //   `https://studapi.teachmeskills.by/blog/posts/?limit=20&search=${searchValue}&ordering=${orderingValue}`,
-    // )
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     setPosts(data);
-    //     // setPostsV2(data);
-    //   });
-  }, [searchValue, orderingValue, dispatch]);
-
-  // useEffect(() => {
-  //   console.log('useEffect 2');
-  //   if (searchValue.length) {
-  //     const newPosts = posts?.results.filter(
-  //       (post: IPost) => post.title.indexOf('searchValue') !== -1,
-  //     );
-  //     // const newPosts = posts?.results.reduce((acc, ))
-  //     if (newPosts) {
-  //       setPostsV2({ ...posts, results: newPosts } as IPostsInfo);
-  //     }
-  //   }
-  // }, [posts, searchValue]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>, field: string) => {
     setSearchValue(event.target.value);
@@ -127,13 +99,17 @@ export const PostsPage = () => {
       />
       <List>
         {postsStore?.results?.map(({ date, title, id, lesson_num, author, isFavorite }) => (
-          <LiPost key={id}>
-            <p>Favorite: {isFavorite ? 'yes' : 'no'}</p>
-            <button onClick={() => dispatch(toggleFavorite(id))}>
-              {isFavorite ? 'Remove' : 'Add'}
-            </button>
-            date: {date} - title: {title} - lesson_num: {lesson_num} - author: {author}
-          </LiPost>
+          <>
+            {isFavorite ? (
+              <LiPost key={id}>
+                <p>Favorite: {isFavorite ? 'yes' : 'no'}</p>
+                <button onClick={() => dispatch(toggleFavorite(id))}>
+                  {isFavorite ? 'Remove' : 'Add'}
+                </button>
+                date: {date} - title: {title} - lesson_num: {lesson_num} - author: {author}
+              </LiPost>
+            ) : null}
+          </>
         ))}
       </List>
     </>

@@ -13,6 +13,7 @@ import { FormTemplate } from './components/templates/FormTemplate/FormTemplate';
 import { PostsPage } from './components/pages/Posts/Posts';
 import { Header } from './components/molecules/Header/Header';
 import { PostPage } from './components/pages/Post/Post';
+import { FavoritesPage } from './components/pages/Favorites/Favorites';
 
 function App() {
   const onChange = async (event: ChangeEvent<HTMLInputElement>, field: string) => {
@@ -27,11 +28,28 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="posts"
+            path="/posts"
             element={
               // <div></div>
-              <FormTemplate title="text">
+              <FormTemplate title="Posts">
                 <PostsPage />
+              </FormTemplate>
+            }>
+            {/* <Route
+              path=":postID"
+              element={
+                // <div></div>
+                <FormTemplate title="text">
+                  <PostPage />
+                </FormTemplate>
+              }></Route> */}
+          </Route>
+          <Route
+            path="/favorites"
+            element={
+              // <div></div>
+              <FormTemplate title="favorites">
+                <FavoritesPage />
               </FormTemplate>
             }>
             {/* <Route
