@@ -10,6 +10,7 @@ import {
 } from '../../../core/slices/postsSlice';
 import { IPostsInfo } from '../../../types/posts';
 import { Input } from '../../atoms/Input';
+import { Modal } from '../../templates/Modal/Modal';
 
 // interface IPost {
 //   author: number;
@@ -32,11 +33,12 @@ import { Input } from '../../atoms/Input';
 export const FavoritesPage = () => {
   // const [sendedUser, setSendedUser] = useState(false);
 
-  const postsStore = useSelector(showPosts);
-  console.log('FavoritesPage', { postsStore });
+  const { posts } = useSelector(showPosts);
+  // console.log('FavoritesPage', { postsStore });
   const dispatch = useDispatch();
+  const [hidden, setHidden] = useState(true);
 
-  const [posts, setPosts] = useState<IPostsInfo>();
+  // const [posts, setPosts] = useState<IPostsInfo>();
   const [postsV2, setPostsV2] = useState<IPostsInfo>();
   const [searchValue, setSearchValue] = useState<string>('');
   const [orderingValue, setOrderingValue] = useState<string>('');
@@ -80,6 +82,10 @@ export const FavoritesPage = () => {
     setOrderingValue(field);
   };
 
+  const onClose = () => {
+    setHidden(true);
+  };
+
   return (
     // <FormTemplate title="Sign in">
     <>
@@ -98,7 +104,7 @@ export const FavoritesPage = () => {
         onBlur={onBlur}
       />
       <List>
-        {postsStore?.results?.map(({ date, title, id, lesson_num, author, isFavorite }) => (
+        {posts?.results?.map(({ date, title, id, lesson_num, author, isFavorite }) => (
           <>
             {isFavorite ? (
               <LiPost key={id}>
@@ -112,6 +118,12 @@ export const FavoritesPage = () => {
           </>
         ))}
       </List>
+      {!hidden && (
+        <Modal onClose={onClose}>
+          <p>Hello</p>
+        </Modal>
+      )}
+      <button onClick={() => setHidden(false)}>Open Modal</button>
     </>
     // </FormTemplate>
   );

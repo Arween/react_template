@@ -7,9 +7,22 @@ import {
   getPostsAsync,
   removePosts,
   toggleFavorite,
+  getIsShowModalPost,
+  getSelectedPost,
+  setIsShowModalPost,
+  setSelectedPost,
+  getSelectedPosts,
+  setIsEditMode,
+  setSelectedPostsList,
+  setIsShowModalPostsList,
+  likePost,
+  dislikePost,
+  setSearchValue,
+  setOrderingValue,
 } from '../../../core/slices/postsSlice';
-import { IPostsInfo } from '../../../types/posts';
+import { IPost, IPostsInfo } from '../../../types/posts';
 import { Input } from '../../atoms/Input';
+import { Modal } from '../../templates/Modal/Modal';
 
 // interface IPost {
 //   author: number;
@@ -32,17 +45,22 @@ import { Input } from '../../atoms/Input';
 export const PostsPage = () => {
   // const [sendedUser, setSendedUser] = useState(false);
 
-  const postsStore = useSelector(showPosts);
-  console.log({ postsStore });
+  const { posts, searchValue, orderingValue } = useSelector(showPosts);
+  const isShowModalPost = useSelector(getIsShowModalPost);
+  const selectedPost = useSelector(getSelectedPost);
+  const { selectedPostsList, isShowModalPostsList, isEditMode } = useSelector(getSelectedPosts);
+  // console.log({ postsStore, selectedPostsList, isShowModalPostsList });
   const dispatch = useDispatch();
 
-  const [posts, setPosts] = useState<IPostsInfo>();
+  // const [posts, setPosts] = useState<IPostsInfo>();
   const [postsV2, setPostsV2] = useState<IPostsInfo>();
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [orderingValue, setOrderingValue] = useState<string>('');
+  // const [searchValue, setSearchValue] = useState<string>('');
+  // const [orderingValue, setOrderingValue] = useState<string>('');
+
+  const [postsLocal, setPostsLocal] = useState<IPost[]>();
 
   useEffect(() => {
-    dispatch(getPostsAsync() as any);
+    dispatch(getPostsAsync({ searchValue, orderingValue }) as any);
     // fetch(
     //   `https://studapi.teachmeskills.by/blog/posts/?limit=20&search=${searchValue}&ordering=${orderingValue}`,
     // )
@@ -70,7 +88,7 @@ export const PostsPage = () => {
   // }, [posts, searchValue]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>, field: string) => {
-    setSearchValue(event.target.value);
+    dispatch(setSearchValue(event.target.value));
   };
 
   const searchInput = {
@@ -105,12 +123,36 @@ export const PostsPage = () => {
 
   const onChangeOrdering = (field: string) => {
     console.log({ field });
-    setOrderingValue(field);
+    dispatch(setOrderingValue(field));
+  };
+
+  const onSelectPost = (post: IPost) => {
+    dispatch(setSelectedPost(post));
+    dispatch(setIsShowModalPost(true));
+  };
+
+  const onSelectPostLocal = (post: IPost) => {
+    if (isEditMode) {
+      setPostsLocal(postsLocal ? [...postsLocal, post] : [post]);
+    }
+  };
+
+  const sendPosts = () => {
+    dispatch(setSelectedPostsList(postsLocal));
+    dispatch(setIsEditMode(false));
+    setPostsLocal([]);
   };
 
   return (
     // <FormTemplate title="Sign in">
     <>
+      Edit mode: {isEditMode ? 'On' : 'Off'}
+      <button onClick={() => dispatch(setIsEditMode(!isEditMode))}>Toggle edit mode</button>
+      <button onClick={sendPosts}>Send posts(Redux)</button>
+      <button onClick={() => dispatch(setIsShowModalPostsList(true))}>Show posts(Modal)</button>
+      {postsLocal?.map(({ id }) => (
+        <Li key={id}>{id}</Li>
+      ))}
       <button onClick={() => dispatch(removePosts())}>Clear posts</button>
       Posts:
       <TabsOrdering>
@@ -126,16 +168,69 @@ export const PostsPage = () => {
         onBlur={onBlur}
       />
       <List>
-        {postsStore?.results?.map(({ date, title, id, lesson_num, author, isFavorite }) => (
-          <LiPost key={id}>
-            <p>Favorite: {isFavorite ? 'yes' : 'no'}</p>
-            <button onClick={() => dispatch(toggleFavorite(id))}>
-              {isFavorite ? 'Remove' : 'Add'}
-            </button>
-            date: {date} - title: {title} - lesson_num: {lesson_num} - author: {author}
-          </LiPost>
-        ))}
+        {posts?.results?.map(
+          ({ date, title, id, lesson_num, author, isFavorite, likes, dislikes, ...res }) => (
+            <LiPost key={id}>
+              id: {id} - title: {title}
+              <button onClick={() => dispatch(likePost(id))}>Like: {likes}</button>
+              <button onClick={() => dispatch(dislikePost(id))}>Dislike: {dislikes}</button>
+              <button
+                onClick={() =>
+                  onSelectPostLocal({
+                    date,
+                    title,
+                    id,
+                    lesson_num,
+                    author,
+                    isFavorite,
+                    likes,
+                    dislikes,
+                    ...res,
+                  })
+                }>
+                Select local posts
+              </button>
+              <button
+                onClick={() =>
+                  onSelectPost({
+                    date,
+                    title,
+                    id,
+                    lesson_num,
+                    author,
+                    isFavorite,
+                    likes,
+                    dislikes,
+                    ...res,
+                  })
+                }>
+                Select post(1)
+              </button>
+              <div>
+                <button onClick={() => dispatch(toggleFavorite(id))}>
+                  {isFavorite ? 'Remove' : 'Add'}
+                </button>
+                <p>Favorite: {isFavorite ? 'yes' : 'no'}</p>
+              </div>
+              date: {date} - title: {title} - lesson_num: {lesson_num} - author: {author}
+            </LiPost>
+          ),
+        )}
       </List>
+      {isShowModalPost && (
+        <Modal onClose={() => dispatch(setIsShowModalPost(false))}>
+          {selectedPost?.image && <Image src={selectedPost?.image} alt="Image" />}
+        </Modal>
+      )}
+      {isShowModalPostsList && (
+        <Modal onClose={() => dispatch(setIsShowModalPostsList(false))}>
+          {selectedPostsList?.map(({ date, title, id, lesson_num, author, isFavorite, ...res }) => (
+            <LiPost key={id}>
+              id: {id} - title: {title}
+            </LiPost>
+          ))}
+        </Modal>
+      )}
     </>
     // </FormTemplate>
   );
@@ -163,4 +258,9 @@ const TabsOrdering = styled.ul`
 const LiPost = styled.li`
   border: 1px solid black;
   padding: 3px;
+`;
+
+const Image = styled.img`
+  height: 100px;
+  width: 100px;
 `;
