@@ -7,6 +7,8 @@ export interface IPost {
   text: string;
   title: string;
   isFavorite: boolean;
+  likes: number;
+  dislikes: number;
 }
 
 export interface IPostsInfo {
