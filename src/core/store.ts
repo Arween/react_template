@@ -1,14 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, applyMiddleware } from '@reduxjs/toolkit';
 import postsSlide from './slices/postsSlice';
+import createSagaMiddleware from 'redux-saga';
+// import logger from 'redux-logger';
+
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { rootSaga } from './saga';
+import authSlide from './slices/authSlice';
+
+// const sagaMiddleware = createSagaMiddleware();
+
+// export const initialRootState = {
+//   ...store.getState(),
+// };
+
+let sagaMiddleware = createSagaMiddleware();
+const middleware = [sagaMiddleware];
 
 export const store = configureStore({
   reducer: {
+    auth: authSlide,
     posts: postsSlide,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
+sagaMiddleware.run(rootSaga);

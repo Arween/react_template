@@ -7,6 +7,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './core/store';
+import { AuthService } from './services/api/AuthService';
+
+AuthService.setCredentials({
+  URL: 'https://studapi.teachmeskills.by',
+});
+AuthService.prefix = 'auth';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
