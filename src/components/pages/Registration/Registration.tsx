@@ -1,7 +1,9 @@
 import { ReactNode, ChangeEvent, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { sendRegistrationAction } from '../../../core/slices/authSlice';
 import {
   validateEmail,
   validateName,
@@ -55,6 +57,7 @@ const defaultUserState = {
 type TUser = typeof defaultUserState;
 
 export const RegistrationPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState(defaultUserState);
 
@@ -148,7 +151,15 @@ export const RegistrationPage = () => {
   };
 
   const sendUser = () => {
-    setSendedUser(true);
+    console.log({ user });
+    // setSendedUser(true);
+    dispatch(
+      sendRegistrationAction({
+        username: user.username.value,
+        email: user.email.value,
+        password: user.password.value,
+      }),
+    );
   };
 
   const inputValues = {

@@ -14,6 +14,7 @@ import { PostsPage } from './components/pages/Posts/Posts';
 import { Header } from './components/molecules/Header/Header';
 import { PostPage } from './components/pages/Post/Post';
 import { FavoritesPage } from './components/pages/Favorites/Favorites';
+import { RegistrationConfirm } from './components/pages/Registration/RegistrationConfirm';
 
 function App() {
   const onChange = async (event: ChangeEvent<HTMLInputElement>, field: string) => {
@@ -27,6 +28,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/activate/:uid/:token"
+            element={
+              // <div></div>
+              <FormTemplate title="Confirm">
+                <RegistrationConfirm />
+              </FormTemplate>
+            }></Route>
           <Route
             path="/posts"
             element={
