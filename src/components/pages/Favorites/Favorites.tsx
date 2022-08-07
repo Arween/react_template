@@ -34,7 +34,7 @@ export const FavoritesPage = () => {
   // const [sendedUser, setSendedUser] = useState(false);
 
   const { posts } = useSelector(showPosts);
-  // console.log('FavoritesPage', { postsStore });
+  //  // console.log('FavoritesPage', { postsStore });
   const dispatch = useDispatch();
   const [hidden, setHidden] = useState(true);
 
@@ -78,7 +78,7 @@ export const FavoritesPage = () => {
   ];
 
   const onChangeOrdering = (field: string) => {
-    console.log({ field });
+    // console.log({ field });
     setOrderingValue(field);
   };
 

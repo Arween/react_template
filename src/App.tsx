@@ -14,11 +14,11 @@ import { PostsPage } from './components/pages/Posts/Posts';
 import { Header } from './components/molecules/Header/Header';
 import { PostPage } from './components/pages/Post/Post';
 import { FavoritesPage } from './components/pages/Favorites/Favorites';
-import { RegistrationConfirm } from './components/pages/Registration/RegistrationConfirm';
+import { RegistrationActivation } from './components/pages/Registration/RegistrationActivation';
 
 function App() {
   const onChange = async (event: ChangeEvent<HTMLInputElement>, field: string) => {
-    console.log({ event, field });
+    //  // console.log({ event, field });
     setName(event.target.value);
   };
 
@@ -33,7 +33,7 @@ function App() {
             element={
               // <div></div>
               <FormTemplate title="Confirm">
-                <RegistrationConfirm />
+                <RegistrationActivation />
               </FormTemplate>
             }></Route>
           <Route
@@ -112,7 +112,7 @@ function App() {
 //     return response.json();
 //   })
 //   .then((data) => {
-//     console.log(data);
+//      // console.log(data);
 //   });
 
 export default App;

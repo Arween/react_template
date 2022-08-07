@@ -49,7 +49,7 @@ export const PostsPage = () => {
   const isShowModalPost = useSelector(getIsShowModalPost);
   const selectedPost = useSelector(getSelectedPost);
   const { selectedPostsList, isShowModalPostsList, isEditMode } = useSelector(getSelectedPosts);
-  // console.log({ postsStore, selectedPostsList, isShowModalPostsList });
+  //  // console.log({ postsStore, selectedPostsList, isShowModalPostsList });
   const dispatch = useDispatch();
 
   // const [posts, setPosts] = useState<IPostsInfo>();
@@ -58,24 +58,13 @@ export const PostsPage = () => {
   // const [orderingValue, setOrderingValue] = useState<string>('');
 
   const [postsLocal, setPostsLocal] = useState<IPost[]>();
-
+  console.log('posts');
   useEffect(() => {
     dispatch(getPostsAsync({ searchValue, orderingValue }) as any);
-    // fetch(
-    //   `https://studapi.teachmeskills.by/blog/posts/?limit=20&search=${searchValue}&ordering=${orderingValue}`,
-    // )
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     setPosts(data);
-    //     // setPostsV2(data);
-    //   });
   }, [searchValue, orderingValue, dispatch]);
 
   // useEffect(() => {
-  //   console.log('useEffect 2');
+  //    // console.log('useEffect 2');
   //   if (searchValue.length) {
   //     const newPosts = posts?.results.filter(
   //       (post: IPost) => post.title.indexOf('searchValue') !== -1,
@@ -122,7 +111,7 @@ export const PostsPage = () => {
   ];
 
   const onChangeOrdering = (field: string) => {
-    console.log({ field });
+    // console.log({ field });
     dispatch(setOrderingValue(field));
   };
 

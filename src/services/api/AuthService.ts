@@ -1,20 +1,9 @@
 import { IUserAuth, IUserConfirm } from '../../types/user';
-import { BaseService } from './BaseService';
+import { GuestService } from './GuestService';
 
 // import { IUserAuth } from '../types/user';
 
-class AuthAPIService extends BaseService {
-  private storage: Storage;
-
-  private contentType = {
-    'Content-Type': 'application/json',
-  };
-
-  constructor() {
-    super();
-    this.storage = localStorage;
-  }
-
+class AuthAPIService extends GuestService {
   public async signUp(profile: IUserAuth) {
     return this.post('users/', profile);
   }
@@ -29,6 +18,14 @@ class AuthAPIService extends BaseService {
 
   public async deleteUser(id: number) {
     return this.remove(`users/${id}`);
+  }
+
+  public async refreshToken(refreshToken: string) {
+    const data = new FormData();
+
+    data.append('refresh', refreshToken);
+
+    return this.post('jwt/refresh/', data);
   }
 }
 
