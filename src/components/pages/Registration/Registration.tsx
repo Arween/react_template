@@ -83,7 +83,7 @@ export const RegistrationPage = () => {
   };
 
   const onBlur = (field: keyof TUser) => {
-    console.log('onBlur', field);
+    // console.log('onBlur', field);
     const { value, compareValue, required } = user[field];
 
     const res = ValidationService.checkField({
@@ -100,7 +100,7 @@ export const RegistrationPage = () => {
       },
     });
 
-    console.log({ res });
+    // console.log({ res });
     // if (field === 'email') {
     //   const isValidEmail = validateEmail(email.value);
     //   setUser({
@@ -151,7 +151,7 @@ export const RegistrationPage = () => {
   };
 
   const sendUser = () => {
-    console.log({ user });
+    // console.log({ user });
     // setSendedUser(true);
     dispatch(
       sendRegistrationAction({

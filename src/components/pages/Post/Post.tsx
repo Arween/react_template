@@ -28,13 +28,13 @@ export const PostPage = () => {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setPost(data);
         });
     }
   }, [params?.postID]);
 
-  // console.log(posts);
+  //  // console.log(posts);
   return (
     // <FormTemplate title="Sign in">
     <>

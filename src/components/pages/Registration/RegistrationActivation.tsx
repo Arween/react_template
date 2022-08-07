@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../../atoms/Button';
-import { sendRegistrationConfirmAction } from '../../../core/slices/authSlice';
+import { getStoreActivation, sendRegistrationConfirmAction } from '../../../core/slices/authSlice';
 import { IUserConfirm } from '../../../types/user';
 //   author: number;
 //   date: string;
@@ -23,16 +23,20 @@ import { IUserConfirm } from '../../../types/user';
 //   results: IPost[];
 // }
 
-export const RegistrationConfirm = () => {
+export const RegistrationActivation = () => {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  console.log({ params });
+  const { errorActivation, isSuccessActivation } = useSelector(getStoreActivation);
+
+  console.log('RegistrationActivation');
 
   useEffect(() => {
-    const uid = params?.uid;
-    if (uid) {
-      // const { uid, token } = params;
+    // eslint-disable-next-line no-debugger
+    // debugger;
+    // const uid = params?.uid;
+    if (params?.uid && params?.token) {
+      // console.log('')
       dispatch(
         sendRegistrationConfirmAction({
           uid: params?.uid as string,
@@ -40,11 +44,21 @@ export const RegistrationConfirm = () => {
         }),
       );
     }
-  }, [dispatch, params, params?.uid]);
+  }, [dispatch, params]);
+
+  // useEffect(() => {
+  //   if (isSuccessActivation) {
+  //     setTimeout(() => {
+  //       navigate('/posts');
+  //     }, 600);
+  //   }
+  // }, [isSuccessActivation, navigate]);
 
   return (
     // <FormTemplate title="Sign in">
     <>
+      {errorActivation && <p>Error</p>}
+      {isSuccessActivation && <p>SuccessActivation</p>}
       <button onClick={() => navigate('/posts')}>Home</button>
     </>
     // </FormTemplate>

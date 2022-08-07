@@ -10,12 +10,16 @@ interface IAuthSate {
   email: string | null;
   error: string | null;
   isSuccess: boolean;
+  errorActivation: boolean;
+  isSuccessActivation: boolean;
 }
 
 const initialState: IAuthSate = {
   email: null,
   error: null,
   isSuccess: false,
+  errorActivation: false,
+  isSuccessActivation: false,
 };
 
 interface IUser {
@@ -42,13 +46,20 @@ export const authSlide = createSlice({
     setIsSuccess: (state, action) => {
       state.isSuccess = action.payload;
     },
+    setErrorActivation: (state, action) => {
+      state.errorActivation = action.payload;
+    },
+    setIsSuccessActivation: (state, action) => {
+      state.isSuccessActivation = action.payload;
+    },
     // getTodo: (state, action) => {
     //   state.data = [action.payload];
     // },
   },
 });
 
-export const { setEmail, setError, setIsSuccess } = authSlide.actions;
+export const { setEmail, setError, setIsSuccess, setErrorActivation, setIsSuccessActivation } =
+  authSlide.actions;
 
 // http://studapi.teachmeskills.by//activate/NDgw/b9jkno-b746256ae1fae9e3cf1c91a21f2bc338
 
@@ -58,6 +69,14 @@ export const { setEmail, setError, setIsSuccess } = authSlide.actions;
 //   posts: IAuthSate;
 // }) => ({ posts, searchValue, orderingValue });
 
+export const getStoreActivation = ({
+  auth: { errorActivation, isSuccessActivation },
+}: {
+  auth: IAuthSate;
+}) => ({
+  errorActivation,
+  isSuccessActivation,
+});
 // export const getSelectedPost = (state: { posts: IPostSate }) => state.posts.selectedPost;
 // export const getIsShowModalPost = (state: { posts: IPostSate }) => state.posts.isShowModalPost;
 // // export const getSelectedPost = (state: { posts: IPostSate }) => state.posts.selectedPost;
@@ -83,9 +102,9 @@ export default authSlide.reducer;
 
 // export const addTodoAsync = (data) => async (dispatch) => {
 //   try {
-//     // console.log(data);
+//     //  // console.log(data);
 //     const response = await axios.post(API_URL, data);
-//     // console.log(response);
+//     //  // console.log(response);
 //     dispatch(addTodo(response.data));
 //   } catch (err) {
 //     throw new Error(err);

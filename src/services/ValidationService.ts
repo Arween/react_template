@@ -43,7 +43,7 @@ class ValidationApiService {
   }
 
   public validateConfirmPassword(confirmPassword: string, password?: string) {
-    console.log({ confirmPassword, password });
+    // console.log({ confirmPassword, password });
     const isValid = Boolean(confirmPassword?.trim() === password?.trim());
 
     return {
