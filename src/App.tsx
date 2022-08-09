@@ -1,5 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
 // import logo from './logo.svg';
 import './App.css';
 // import styled from 'styled-components';
@@ -15,14 +17,17 @@ import { Header } from './components/molecules/Header/Header';
 import { PostPage } from './components/pages/Post/Post';
 import { FavoritesPage } from './components/pages/Favorites/Favorites';
 import { RegistrationActivation } from './components/pages/Registration/RegistrationActivation';
+import { LoginPage } from './components/pages/Login/Login';
+import { useExitPrompt } from './components/pages/Login/useExitPrompt';
+import { useDispatch } from 'react-redux';
+import { bootstrapSagaAction } from './core/slices/authSlice';
 
 function App() {
-  const onChange = async (event: ChangeEvent<HTMLInputElement>, field: string) => {
-    //  // console.log({ event, field });
-    setName(event.target.value);
-  };
+  const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
+  useEffect(() => {
+    dispatch(bootstrapSagaAction());
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -79,22 +84,19 @@ function App() {
               </FormTemplate>
             }></Route>
           <Route
-            path="/"
+            path="/login"
             element={
               <FormTemplate title="text">
+                <LoginPage />
+              </FormTemplate>
+            }></Route>
+          <Route
+            path="/"
+            element={
+              <FormTemplate title="Registration">
                 <RegistrationPage />
               </FormTemplate>
-            }>
-            {/* <Route
-              path="/posts"
-              element={
-                // <div></div>
-                <FormTemplate title="text">
-                  <PostsPage />
-                </FormTemplate>
-              }
-            /> */}
-          </Route>
+            }></Route>
         </Routes>
       </BrowserRouter>
     </div>

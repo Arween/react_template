@@ -8,11 +8,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './core/store';
 import { AuthService } from './services/api/AuthService';
+import { UserService } from './services/api/UserService';
+import { PostsService } from './services/api/PostsService';
 
 AuthService.setCredentials({
   URL: 'https://studapi.teachmeskills.by',
 });
 AuthService.prefix = 'auth';
+
+UserService.setCredentials({
+  URL: 'https://studapi.teachmeskills.by',
+});
+UserService.prefix = 'auth/users';
+
+PostsService.setCredentials({
+  URL: 'https://studapi.teachmeskills.by',
+});
+PostsService.prefix = 'blog/posts';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

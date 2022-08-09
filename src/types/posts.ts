@@ -1,3 +1,5 @@
+import { ImageType } from 'react-images-uploading';
+
 export interface IPost {
   author: number;
   date: string;
@@ -16,4 +18,11 @@ export interface IPostsInfo {
   next: string | null;
   previous: string | null;
   results: IPost[];
+}
+
+export interface IPostSendRequest {
+  image: ImageType;
+  text: string;
+  lesson_num: number;
+  title: string;
 }

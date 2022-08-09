@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { refreshTokensService } from './RefreshService';
+import { store } from '../../core/store';
+import { ACTIONS } from '../../core/constants';
 
 interface ICredentials {
   URL: string;
@@ -20,7 +22,7 @@ projectAxios.interceptors.response.use(
       console.log({ code });
 
       if (code.toLowerCase().indexOf('invalid refresh token') !== -1) {
-        // store.dispatch({ type: ACTIONS.LOG_OUT });
+        store.dispatch({ type: ACTIONS.LOG_OUT });
 
         return;
       }

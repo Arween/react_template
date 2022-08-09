@@ -1,8 +1,8 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IPostsInfo, IPost } from '../../types/posts';
-import { IUserConfirm } from '../../types/user';
-import { actions } from '../constants';
+import { IUserConfirm, IProfile } from '../../types/user';
+import { ACTIONS } from '../constants';
 // const axios = require('axios');
 // const API_URL = 'https://studapi.teachmeskills.by/blog/posts/?limit=20';
 
@@ -12,6 +12,7 @@ interface IAuthSate {
   isSuccess: boolean;
   errorActivation: boolean;
   isSuccessActivation: boolean;
+  profile: null | IProfile;
 }
 
 const initialState: IAuthSate = {
@@ -20,6 +21,7 @@ const initialState: IAuthSate = {
   isSuccess: false,
   errorActivation: false,
   isSuccessActivation: false,
+  profile: null,
 };
 
 interface IUser {
@@ -28,10 +30,17 @@ interface IUser {
   password: string;
 }
 
-export const sendRegistrationAction = createAction<IUser>(actions.SEND_REGISTRATION);
+interface ILoginUser {
+  email: string;
+  password: string;
+}
+
+export const sendRegistrationAction = createAction<IUser>(ACTIONS.SEND_REGISTRATION);
+export const sendLoginAction = createAction<ILoginUser>(ACTIONS.SEND_LOGIN);
 export const sendRegistrationConfirmAction = createAction<IUserConfirm>(
-  actions.SEND_REGISTRATION_CONFIRM,
+  ACTIONS.SEND_REGISTRATION_CONFIRM,
 );
+export const bootstrapSagaAction = createAction(ACTIONS.BOOTSTRAP_SAGA);
 
 export const authSlide = createSlice({
   name: 'auth',
@@ -52,14 +61,23 @@ export const authSlide = createSlice({
     setIsSuccessActivation: (state, action) => {
       state.isSuccessActivation = action.payload;
     },
+    setProfile: (state, action) => {
+      state.profile = action.payload;
+    },
     // getTodo: (state, action) => {
     //   state.data = [action.payload];
     // },
   },
 });
 
-export const { setEmail, setError, setIsSuccess, setErrorActivation, setIsSuccessActivation } =
-  authSlide.actions;
+export const {
+  setEmail,
+  setError,
+  setIsSuccess,
+  setErrorActivation,
+  setIsSuccessActivation,
+  setProfile,
+} = authSlide.actions;
 
 // http://studapi.teachmeskills.by//activate/NDgw/b9jkno-b746256ae1fae9e3cf1c91a21f2bc338
 
@@ -77,6 +95,8 @@ export const getStoreActivation = ({
   errorActivation,
   isSuccessActivation,
 });
+
+export const getStoreProfile = ({ auth: { profile } }: { auth: IAuthSate }) => profile;
 // export const getSelectedPost = (state: { posts: IPostSate }) => state.posts.selectedPost;
 // export const getIsShowModalPost = (state: { posts: IPostSate }) => state.posts.isShowModalPost;
 // // export const getSelectedPost = (state: { posts: IPostSate }) => state.posts.selectedPost;
