@@ -1,26 +1,40 @@
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { getStoreProfile } from '../../../core/slices/authSlice';
 
 import { ColorService } from '../../../services/ColorService';
 
 export const Header = () => {
   const location = useLocation();
 
-  // console.log({ location });
+  const profile = useSelector(getStoreProfile);
   return (
     <HeaderStyled>
       <NavStyled>
-        <LinkStyled to="/" active={Boolean(location.pathname === '/')}>
-          Home
-        </LinkStyled>{' '}
+        {profile ? (
+          <>
+            <LinkStyled active={Boolean(location.pathname === '/favorites')}>
+              <Link to="/favorites">Favorites</Link>
+            </LinkStyled>
+          </>
+        ) : (
+          <>
+            <LinkStyled active={Boolean(location.pathname === '/')}>
+              <Link to="/">Registration</Link>
+            </LinkStyled>{' '}
+            <LinkStyled active={Boolean(location.pathname === '/login')}>
+              <Link to="/login">login</Link>
+            </LinkStyled>{' '}
+          </>
+        )}
         |{' '}
-        <LinkStyled active={Boolean(location.pathname === '/posts')} to="/posts">
-          Posts
+        <LinkStyled active={Boolean(location.pathname === '/posts')}>
+          <Link to="/posts">Posts</Link>
         </LinkStyled>
-        <LinkStyled active={Boolean(location.pathname === '/favorites')} to="/favorites">
-          Favorites
-        </LinkStyled>
+        <ProfileName>| Profile name: {profile?.username}</ProfileName>
       </NavStyled>
+
       {/* <Image src="http://wallpapers-image.ru/2560x1600/mountains/wallpapers/wallpapers-mountains-08.jpg" /> */}
     </HeaderStyled>
   );
@@ -36,12 +50,20 @@ const HeaderStyled = styled.header`
 const NavStyled = styled.nav`
   color: ${ColorService.WHITE};
   padding: 20px 100px 0;
+  display: flex;
 `;
 
-const LinkStyled = styled(Link)<{ active: boolean }>`
-  color: ${ColorService.WHITE};
+const LinkStyled = styled.div<{ active: boolean }>`
+  a {
+    color: ${ColorService.WHITE};
+    margin: 20px;
+    color: ${({ active }) => ` ${active ? ColorService.ERROR : ColorService.WHITE}`};
+  }
+`;
 
-  color: ${({ active }) => ` ${active ? ColorService.ERROR : ColorService.WHITE}`};
+const ProfileName = styled.div`
+  color: ${ColorService.WHITE};
+  /* margin: 20px; */
 `;
 
 const Image = styled.img`
