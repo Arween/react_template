@@ -3,9 +3,15 @@ import styled from 'styled-components';
 import { ColorService } from '../../../services/ColorService';
 import { getFontFamily } from '../../../services/FontService';
 
+export enum ETypeInput {
+  password = 'password',
+  text = 'text',
+  number = 'number',
+}
+
 interface IInput {
-  value: string;
-  type: 'password' | 'text';
+  value: string | number;
+  type: ETypeInput;
   error: string;
   labelText: string;
   placeholder: string;

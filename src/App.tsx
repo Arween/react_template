@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { useDispatch } from 'react-redux';
 
 // import logo from './logo.svg';
 import './App.css';
@@ -19,8 +20,10 @@ import { FavoritesPage } from './components/pages/Favorites/Favorites';
 import { RegistrationActivation } from './components/pages/Registration/RegistrationActivation';
 import { LoginPage } from './components/pages/Login/Login';
 import { useExitPrompt } from './components/pages/Login/useExitPrompt';
-import { useDispatch } from 'react-redux';
+
 import { bootstrapSagaAction } from './core/slices/authSlice';
+import { AddPost } from './components/pages/AddPost/AddPost';
+import { MyPosts } from './components/pages/MyPosts/MyPosts';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,11 +37,27 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
+            path="/my-posts"
+            element={
+              // <div></div>
+              <FormTemplate title="My Posts">
+                <MyPosts />
+              </FormTemplate>
+            }></Route>
+          <Route
             path="/activate/:uid/:token"
             element={
               // <div></div>
               <FormTemplate title="Confirm">
                 <RegistrationActivation />
+              </FormTemplate>
+            }></Route>
+          <Route
+            path="/add-post"
+            element={
+              // <div></div>
+              <FormTemplate title="Add post">
+                <AddPost />
               </FormTemplate>
             }></Route>
           <Route

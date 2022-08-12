@@ -10,6 +10,7 @@ import {
 } from '../../../core/slices/postsSlice';
 import { IPostsInfo } from '../../../types/posts';
 import { Input } from '../../atoms/Input';
+import { ETypeInput } from '../../atoms/Input/Input';
 import { Modal } from '../../templates/Modal/Modal';
 
 // interface IPost {
@@ -50,7 +51,7 @@ export const FavoritesPage = () => {
   const searchInput = {
     value: searchValue,
     error: '',
-    type: 'text' as 'text',
+    type: ETypeInput.text,
     labelText: 'Search',
     placeholder: 'Placeholder',
     disabled: false,

@@ -13,6 +13,7 @@ import {
 import { ValidationService } from '../../../services/ValidationService';
 import { Button } from '../../atoms/Button';
 import { Input } from '../../atoms/Input';
+import { ETypeInput } from '../../atoms/Input/Input';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
 
 interface IField {
@@ -164,7 +165,7 @@ export const RegistrationPage = () => {
 
   const inputValues = {
     value: username.value,
-    type: 'text' as 'text',
+    type: ETypeInput.text,
     error: username.error,
     labelText: 'Username',
     placeholder: 'Placeholder',
@@ -191,6 +192,7 @@ export const RegistrationPage = () => {
           labelText="Email"
           value={email.value}
           error={email.error}
+          type={ETypeInput.text}
         />
       </InputWrapper>
       <InputWrapper>
@@ -199,7 +201,7 @@ export const RegistrationPage = () => {
           onChange={(event) => onChange(event, 'password')}
           {...inputValues}
           labelText="Password"
-          type="password"
+          type={ETypeInput.password}
           value={password.value}
           error={password.error}
         />
@@ -210,12 +212,12 @@ export const RegistrationPage = () => {
           onChange={(event) => onChange(event, 'confirmPassword')}
           {...inputValues}
           labelText="Confirm password"
-          type="password"
+          type={ETypeInput.password}
           value={confirmPassword.value}
           error={confirmPassword.error}
         />
       </InputWrapper>
-      <Button text="Sign Up" theme="primary" onClick={() => sendUser()} disabled={isValidUser} />
+      <Button text="Sign Up" theme="primary" onClick={() => sendUser()} disabled={!isValidUser} />
 
       {/* </FormTemplate> */}
     </>

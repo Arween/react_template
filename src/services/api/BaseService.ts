@@ -12,20 +12,26 @@ export const projectAxios = axios.create();
 projectAxios.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const { status, data, code } = error.response;
+    const {
+      status,
+      data: { code },
+    } = error.response;
 
     if (status !== 401) {
       return Promise.reject(error);
     }
 
     if (status === 401 && code === 'token_not_valid') {
-      console.log({ code });
+      localStorage.removeItem('refresh');
+      localStorage.removeItem('access');
+      store.dispatch({ type: ACTIONS.LOG_OUT });
+      // if (code.toLowerCase().indexOf('invalid refresh token') !== -1) {
+      //   // localStorage.
+      //   console.log('hello');
+      //   store.dispatch({ type: ACTIONS.LOG_OUT });
 
-      if (code.toLowerCase().indexOf('invalid refresh token') !== -1) {
-        store.dispatch({ type: ACTIONS.LOG_OUT });
-
-        return;
-      }
+      //   return;
+      // }
 
       const rts = new refreshTokensService(localStorage);
 
