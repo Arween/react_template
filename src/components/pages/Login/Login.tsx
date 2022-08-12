@@ -17,6 +17,7 @@ import { Button } from '../../atoms/Button';
 import { Input } from '../../atoms/Input';
 import { FormTemplate } from '../../templates/FormTemplate/FormTemplate';
 import { useExitPrompt } from './useExitPrompt';
+import { ETypeInput } from '../../atoms/Input/Input';
 
 interface IField {
   value: string;
@@ -127,7 +128,7 @@ export const LoginPage = () => {
 
   const inputValues = {
     value: email.value,
-    type: 'text' as 'text',
+    type: ETypeInput.text,
     error: email.error,
     labelText: 'Username',
     placeholder: 'Placeholder',
@@ -155,13 +156,13 @@ export const LoginPage = () => {
           onChange={(event) => onChange(event, 'password')}
           {...inputValues}
           labelText="Password"
-          type="password"
+          type={ETypeInput.password}
           value={password.value}
           error={password.error}
         />
       </InputWrapper>
 
-      <Button text="Sign Up" theme="primary" onClick={() => sendUser()} disabled={isValidUser} />
+      <Button text="Sign Up" theme="primary" onClick={() => sendUser()} disabled={!isValidUser} />
 
       {/* </FormTemplate> */}
     </>

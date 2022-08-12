@@ -1,8 +1,8 @@
 interface IField {
-  value: string;
+  value: string | number;
   required: boolean;
   rules: string[];
-  compareValue?: string;
+  compareValue?: string | number;
 }
 
 interface IFieldForm {
@@ -73,18 +73,24 @@ class ValidationApiService {
 
   public checkField({ rules, value, compareValue, required }: IField) {
     const errors = rules.map((rule) => {
-      if (!required && !value.length) {
+      if (typeof value === 'number') {
         return '';
       }
 
-      const func = this.getValidatorByRule(rule);
+      if (typeof value === 'string') {
+        if (!required && !value.length) {
+          return '';
+        }
 
-      if (compareValue) {
-        return func(value, compareValue).errorMessage;
-      }
+        const func = this.getValidatorByRule(rule);
 
-      if (!compareValue) {
-        return func(value).errorMessage;
+        if (compareValue) {
+          return func(value, compareValue as string).errorMessage;
+        }
+
+        if (!compareValue) {
+          return func(value).errorMessage;
+        }
       }
     });
     return errors.filter((message) => message !== '').join('. ');
@@ -106,7 +112,7 @@ class ValidationApiService {
       [] as string[],
     );
 
-    return Boolean(errors.length);
+    return Boolean(!errors.length);
   }
 }
 

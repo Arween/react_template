@@ -17,6 +17,12 @@ export const Header = () => {
             <LinkStyled active={Boolean(location.pathname === '/favorites')}>
               <Link to="/favorites">Favorites</Link>
             </LinkStyled>
+            <LinkStyled active={Boolean(location.pathname === '/my-posts')}>
+              <Link to="/my-posts">My posts</Link>
+            </LinkStyled>
+            <LinkStyled active={Boolean(location.pathname === '/add-post')}>
+              <Link to="/add-post">+ Add new post</Link>
+            </LinkStyled>
           </>
         ) : (
           <>

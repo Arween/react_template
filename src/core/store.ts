@@ -1,4 +1,4 @@
-import { configureStore, applyMiddleware } from '@reduxjs/toolkit';
+import { configureStore, applyMiddleware, combineReducers } from '@reduxjs/toolkit';
 import postsSlide from './slices/postsSlice';
 import createSagaMiddleware from 'redux-saga';
 // import logger from 'redux-logger';
@@ -16,11 +16,20 @@ import authSlide from './slices/authSlice';
 let sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
+const combinedReducer = combineReducers({
+  auth: authSlide,
+  posts: postsSlide,
+});
+
+const rootReducer = (state: any, action: any) => {
+  if (action.type === 'LOG_OUT') {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
+
 export const store = configureStore({
-  reducer: {
-    auth: authSlide,
-    posts: postsSlide,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
 });
 

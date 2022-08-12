@@ -1,8 +1,13 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IPostsInfo, IPost } from '../../types/posts';
+import { IPostsInfo, IPost, IPostSendRequest } from '../../types/posts';
+import { ACTIONS } from '../constants';
 // const axios = require('axios');
 const API_URL = 'https://studapi.teachmeskills.by/blog/posts/?limit=20';
+
+export const sendPostAction = createAction<IPostSendRequest>(ACTIONS.SEND_POST);
+
+export const getMyPostsAction = createAction(ACTIONS.GET_MY_POSTS);
 
 interface IPostSate {
   posts: IPostsInfo | null;
@@ -13,6 +18,8 @@ interface IPostSate {
   isEditMode: boolean;
   searchValue: string;
   orderingValue: string;
+  myPosts: IPost[] | null;
+  isSendedPost: boolean;
 }
 
 const initialState: IPostSate = {
@@ -24,6 +31,8 @@ const initialState: IPostSate = {
   isEditMode: false,
   searchValue: '',
   orderingValue: '',
+  myPosts: null,
+  isSendedPost: false,
 };
 
 export const postsSlide = createSlice({
@@ -92,6 +101,12 @@ export const postsSlide = createSlice({
     setOrderingValue: (state, action) => {
       state.orderingValue = action.payload;
     },
+    setMyPosts: (state, action) => {
+      state.myPosts = action.payload;
+    },
+    setIsSendedPost: (state, action) => {
+      state.isSendedPost = action.payload;
+    },
     // getTodo: (state, action) => {
     //   state.data = [action.payload];
     // },
@@ -124,13 +139,15 @@ export const {
   dislikePost,
   setSearchValue,
   setOrderingValue,
+  setMyPosts,
+  setIsSendedPost,
 } = postsSlide.actions;
 
 export const showPosts = ({
-  posts: { posts, searchValue, orderingValue },
+  posts: { posts, searchValue, orderingValue, myPosts, isSendedPost },
 }: {
   posts: IPostSate;
-}) => ({ posts, searchValue, orderingValue });
+}) => ({ posts, searchValue, orderingValue, myPosts, isSendedPost });
 
 export const getSelectedPost = (state: { posts: IPostSate }) => state.posts.selectedPost;
 export const getIsShowModalPost = (state: { posts: IPostSate }) => state.posts.isShowModalPost;

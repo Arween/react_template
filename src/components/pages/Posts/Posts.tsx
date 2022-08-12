@@ -22,6 +22,7 @@ import {
 } from '../../../core/slices/postsSlice';
 import { IPost, IPostsInfo } from '../../../types/posts';
 import { Input } from '../../atoms/Input';
+import { ETypeInput } from '../../atoms/Input/Input';
 import { Modal } from '../../templates/Modal/Modal';
 
 // interface IPost {
@@ -58,7 +59,7 @@ export const PostsPage = () => {
   // const [orderingValue, setOrderingValue] = useState<string>('');
 
   const [postsLocal, setPostsLocal] = useState<IPost[]>();
-  console.log('posts');
+
   useEffect(() => {
     dispatch(getPostsAsync({ searchValue, orderingValue }) as any);
   }, [searchValue, orderingValue, dispatch]);
@@ -83,7 +84,7 @@ export const PostsPage = () => {
   const searchInput = {
     value: searchValue,
     error: '',
-    type: 'text' as 'text',
+    type: ETypeInput.text,
     labelText: 'Search',
     placeholder: 'Placeholder',
     disabled: false,
@@ -135,6 +136,7 @@ export const PostsPage = () => {
   return (
     // <FormTemplate title="Sign in">
     <>
+      <button onClick={() => dispatch({ type: 'LOG_OUT' })}>helo</button>
       Edit mode: {isEditMode ? 'On' : 'Off'}
       <button onClick={() => dispatch(setIsEditMode(!isEditMode))}>Toggle edit mode</button>
       <button onClick={sendPosts}>Send posts(Redux)</button>
