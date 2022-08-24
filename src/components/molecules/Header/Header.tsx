@@ -32,6 +32,9 @@ export const Header = () => {
             <LinkStyled active={Boolean(location.pathname === '/login')}>
               <Link to="/login">login</Link>
             </LinkStyled>{' '}
+            <LinkStyled active={Boolean(location.pathname === '/finance')}>
+              <Link to="/finance">Finance</Link>
+            </LinkStyled>{' '}
           </>
         )}
         |{' '}

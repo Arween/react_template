@@ -61,7 +61,7 @@ export const PostsPage = () => {
   const [postsLocal, setPostsLocal] = useState<IPost[]>();
 
   useEffect(() => {
-    dispatch(getPostsAsync({ searchValue, orderingValue }) as any);
+    dispatch(getPostsAsync({ searchValue, orderingValue, limit: 100, offset: 0 }) as any);
   }, [searchValue, orderingValue, dispatch]);
 
   // useEffect(() => {

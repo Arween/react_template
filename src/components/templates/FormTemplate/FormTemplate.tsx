@@ -18,10 +18,10 @@ export const FormTemplate = ({ children, title }: IFormTemplate) => (
     <Header />
     <Container>
       <Content>
-        <Head>
+        {/* <Head>
           <Link href="/">Back to home</Link>
           <Title title={title} />
-        </Head>
+        </Head> */}
         <FormContent>{children}</FormContent>
       </Content>
       <Footer />
