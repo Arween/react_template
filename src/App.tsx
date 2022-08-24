@@ -24,6 +24,7 @@ import { useExitPrompt } from './components/pages/Login/useExitPrompt';
 import { bootstrapSagaAction } from './core/slices/authSlice';
 import { AddPost } from './components/pages/AddPost/AddPost';
 import { MyPosts } from './components/pages/MyPosts/MyPosts';
+import { FinancePage } from './components/pages/Finance/Finance';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,14 @@ function App() {
               // <div></div>
               <FormTemplate title="My Posts">
                 <MyPosts />
+              </FormTemplate>
+            }></Route>
+          <Route
+            path="/finance"
+            element={
+              // <div></div>
+              <FormTemplate title="Finance">
+                <FinancePage />
               </FormTemplate>
             }></Route>
           <Route
